@@ -1,16 +1,16 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
-
+import MySQLdb
 from flask import Flask, render_template, request, redirect
 
 
-#project_dir = os.path.dirname(os.path.abspath(__file__))
-#database_file = "sqlite:///{}".format(os.path.join(project_dir, "bookdatabase.db"))
+project_dir = os.path.dirname(os.path.abspath(__file__))
+database_file = "sqlite:///{}".format(os.path.join(project_dir, "bookdatabase.db"))
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://root:ayush1501@ayush-db.cnp54uzbssuf.us-east-1.rds.amazonaws.com/bookdatabase"
+app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 
 db = SQLAlchemy(app)
 
@@ -20,7 +20,7 @@ class Book(db.Model):
     def __repr__(self):
         return "<Title: {}>".format(self.title)
 
-@app.route("/", methods=["GET", "POST"])
+
 @app.route('/', methods=["GET", "POST"])
 def home():
     books = None
